@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RCS Display - Professional LED Screen Quotation Tool</title>
+    <!-- Modern premium fonts: Inter for UI, Outfit for Headings/Numbers -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Premium background elements -->
+    <div class="bg-shapes">
+        <div class="shape shape1"></div>
+        <div class="shape shape2"></div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="header-top">
+                <div class="logo-container">
+                    <div class="brand-name">
+                        <span class="brand-rcs">RCS</span><span class="brand-display"> Display</span>
+                        <div class="brand-tagline">Regent Control System</div>
+                    </div>
+                </div>
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">
+                    <span class="theme-icon-light">☀️ Light</span>
+                    <span class="theme-icon-dark" style="display: none;">🌙 Dark</span>
+                </button>
+            </div>
+            <div class="tagline">Professional LED Screen Quotation Tool by RCS Display Solutions</div>
+        </div>
+
+        <div class="main-grid">
+            <div class="card">
+                <h2 class="card-title">Customer Details</h2>
+                <div class="error-message" id="errorMessage"></div>
+
+                <form id="quoteForm">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-input" id="customerName" placeholder="Enter customer name"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" id="customerEmail" placeholder="customer@example.com"
+                            required>
+                        <div class="helper-text" id="emailHelper">Must contain @</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" class="form-input" id="customerPhone" placeholder="10-digit number"
+                            maxlength="10" required>
+                        <div class="helper-text" id="phoneHelper">Exactly 10 digits required</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Installation Type</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="indoorCheck" onchange="updateLocationFilters()">
+                                <label for="indoorCheck">Indoor</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="outdoorCheck" onchange="updateLocationFilters()">
+                                <label for="outdoorCheck">Outdoor</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">City / Location</label>
+                        <input type="text" class="form-input" id="location" placeholder="City, State" required>
+                    </div>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title">Screen Specifications</h2>
+
+                <div class="form-group">
+                    <label class="form-label">Viewing Distance (meters)</label>
+                    <input type="number" class="form-input" id="viewingDistance" placeholder="e.g. 5" step="0.1"
+                        required>
+                </div>
+
+                <div id="recommendationBox" class="recommendation-box">
+                    <div class="recommendation-title">💡 Recommended Pixel Pitch</div>
+                    <div class="recommendation-text" id="recommendationText"></div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Select Pixel Pitch</label>
+                    <div class="select-wrapper">
+                        <select class="form-select" id="pixelPitch" required>
+                            <option value="">Choose pixel pitch..</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Desired Width (mm)</label>
+                        <input type="number" class="form-input" id="screenWidth" placeholder="Any size" step="10"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Desired Height (mm)</label>
+                        <input type="number" class="form-input" id="screenHeight" placeholder="Any size" step="10"
+                            required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Structure (Wall Mount) Required?</label>
+                    <div class="select-wrapper">
+                        <select class="form-select" id="structureRequired">
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="button" class="btn-calculate" onclick="calculateQuote()">
+                    GENERATE QUOTE
+                </button>
+            </div>
+
+            <div class="card results-card" id="resultsCard">
+                <!-- dynamic JS content -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modals -->
+    <div class="text-output-modal" id="textOutputModal">
+        <div class="text-output-container">
+            <div class="text-output-header">
+                <div class="text-output-title">Quotation Summary</div>
+                <button class="close-btn" onclick="closeTextModal()">&times;</button>
+            </div>
+            <div class="text-output-content" id="textOutputContent"></div>
+            <button class="copy-btn" onclick="copyToClipboard()">Copy to Clipboard</button>
+        </div>
+    </div>
+
+    <!-- jsPDF Library for PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- EmailJS Library -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
